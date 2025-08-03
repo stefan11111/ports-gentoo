@@ -84,6 +84,8 @@ PATCHES=(
 	"${FILESDIR}"/nvidia-settings-390.144-desktop.patch
 	"${FILESDIR}"/nvidia-settings-390.144-no-gtk2.patch
 	"${FILESDIR}"/nvidia-settings-390.144-raw-ldflags.patch
+	"${FILESDIR}"/nvidia-drivers-470.256.02-follow-pfn.patch
+	"${FILESDIR}"/nvidia-drivers-470.256.02-output_poll_changed.patch
 )
 
 pkg_setup() {
