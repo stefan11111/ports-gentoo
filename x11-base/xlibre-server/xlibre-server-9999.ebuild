@@ -17,7 +17,7 @@ fi
 
 IUSE_SERVERS="xephyr xfbdev xnest xorg xvfb"
 IUSE_EXTENSIONS="xcsecurity +xinerama +glx +glx-dri"
-IUSE="${IUSE_SERVERS} ${IUSE_EXTENSIONS} debug +elogind minimal seatd selinux suid systemd test +udev unwind"
+IUSE="${IUSE_SERVERS} ${IUSE_EXTENSIONS} debug +elogind +gbm minimal seatd selinux suid systemd test +udev unwind"
 RESTRICT="!test? ( test )"
 
 CDEPEND="
@@ -53,13 +53,14 @@ CDEPEND="
 		x11-libs/xcb-util-wm
 	)
 	glx-dri? ( >=media-libs/mesa-18[X(+),egl(+),gbm(+)] )
-	!minimal? (
+	gbm? (
 		|| (
 			media-libs/libgbm
 			>=media-libs/mesa-18[X(+),egl(+),gbm(+)]
 		)
-		>=media-libs/libepoxy-1.5.4[X,egl(+)]
 	)
+
+	!minimal? ( >=media-libs/libepoxy-1.5.4[X,egl(+)] )
 	udev? ( virtual/libudev:= )
 	unwind? ( sys-libs/libunwind:= )
 	seatd? ( >=sys-auth/seatd-0.9.1 )
@@ -120,6 +121,7 @@ src_configure() {
 		$(meson_use !minimal dri2)
 		$(meson_use !minimal dri3)
 		$(meson_use !minimal glamor)
+		$(meson_use gbm)
 		$(meson_use glx)
 		$(meson_use glx-dri glx_dri)
 		$(meson_use udev)
